@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://genial.wang/"/>
-  <updated>2017-08-28T02:08:34.000Z</updated>
+  <updated>2017-08-28T06:14:10.000Z</updated>
   <id>http://genial.wang/</id>
   
   <author>
@@ -17,15 +17,14 @@
   
   <entry>
     <title>基于Python的静态博客系统</title>
-    <link href="http://genial.wang/2017/08/28/mass-1/"/>
-    <id>http://genial.wang/2017/08/28/mass-1/</id>
-    <published>2017-08-27T16:13:43.000Z</published>
-    <updated>2017-08-28T02:08:34.000Z</updated>
+    <link href="http://genial.wang/2015/11/03/mass-1/"/>
+    <id>http://genial.wang/2015/11/03/mass-1/</id>
+    <published>2015-11-02T16:13:43.000Z</published>
+    <updated>2017-08-28T06:14:10.000Z</updated>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;当前流行的博客系统有很多,博主简单介绍两款:&lt;/p&gt;
-
+      &lt;p&gt;如果你觉得WP实在是过于臃肿;如果你觉得Hexo仍然存在很多冗余的东西;如果你想自主开发一个简单但却不平凡的博客系统,那么你可以参考本文的做法。(下文将本文实现的博客系统称为pyblog)&lt;br&gt;
     
     </summary>
     
