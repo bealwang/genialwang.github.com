@@ -6,20 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://genial.wang">
-  <title>如何优雅地实现一个任务并行组件(二) | genialwang</title>
+  <title>genialwang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="上一篇博客中我们实现了一个精简的线程池, 虽然不如Java线程池这么强大, 但是足以满足我们的需求. 我们有了线程池, 还需要一个数据结构来存放任务, 这样每个线程就知道该去哪里找任务做. 所以我们需要一个任务队列.">
-<meta name="keywords" content="高性能计算,C&#x2F;C++,Linux">
-<meta property="og:type" content="article">
-<meta property="og:title" content="如何优雅地实现一个任务并行组件(二)">
-<meta property="og:url" content="http://genial.wang/2017/06/30/hpc-2/index.html">
+  <meta name="description" content="google-site-verification: googleadc68421fe0c05cb.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="genialwang">
+<meta property="og:url" content="http://genial.wang/googleadc68421fe0c05cb.html">
 <meta property="og:site_name" content="genialwang">
-<meta property="og:description" content="上一篇博客中我们实现了一个精简的线程池, 虽然不如Java线程池这么强大, 但是足以满足我们的需求. 我们有了线程池, 还需要一个数据结构来存放任务, 这样每个线程就知道该去哪里找任务做. 所以我们需要一个任务队列.">
+<meta property="og:description" content="google-site-verification: googleadc68421fe0c05cb.html">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-08-28T11:06:10.000Z">
+<meta property="og:updated_time" content="2017-08-28T12:18:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何优雅地实现一个任务并行组件(二)">
-<meta name="twitter:description" content="上一篇博客中我们实现了一个精简的线程池, 虽然不如Java线程池这么强大, 但是足以满足我们的需求. 我们有了线程池, 还需要一个数据结构来存放任务, 这样每个线程就知道该去哪里找任务做. 所以我们需要一个任务队列.">
+<meta name="twitter:title" content="genialwang">
+<meta name="twitter:description" content="google-site-verification: googleadc68421fe0c05cb.html">
   
     <link rel="alternative" href="/atom.xml" title="genialwang" type="application/atom+xml">
   
@@ -179,130 +178,19 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hpc-2" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
   <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      如何优雅地实现一个任务并行组件(二)
-    </h1>
-  
-
-        
-        <a href="/2017/06/30/hpc-2/" class="archive-article-date">
-  	<time datetime="2017-06-30T04:56:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-30</time>
-</a>
-        
-      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>上一篇博客中我们实现了一个精简的线程池, 虽然不如Java线程池这么强大, 但是足以满足我们的需求. 我们有了线程池, 还需要一个数据结构来存放任务, 这样每个线程就知道该去哪里找任务做. 所以我们需要一个任务队列.<br><a id="more"></a></p>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>本篇内容主要描述怎么实现一个任务队列, 这也是任务并行组件的核心所在.<br>顾名思义, 任务队列用来存放任务. 但是我们要实现任务并行, 那么就必须考虑到并发问题. 所以这里所说的任务队列除了需要有存放任务, 管理任务, 设置任务优先级等等基本功能, 还必须要保证线程安全. 所以这个任务队列是一套东西, 而不仅仅是一个队列, 虽然它提供给外部的接口看起来只是一个单纯的队列:).</p>
-<h2 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h2><p>任务队列的执行过程应该是这样的</p>
-<ul>
-<li>任务入队, 唤醒一个线程(牧羊人), 该线程遍历任务队列取出任务.</li>
-<li>牧羊人线程设置OpenMP线程数量(羊线程)为任务指定的数量</li>
-<li>执行任务</li>
-<li>若没有合适的任务, 则等待条件变量</li>
-</ul>
-<p>首先, 我们要有一个数据结构将任务存下来, 任务队列需要能够支持增加, 删除, 设置优先级等功能. 根据这种场景我们认为用双向链表存放最为合适.<br>做东西写代码之前, 我们先来梳理一下任务队列应该长成什么样子.</p>
-<ol>
-<li>全局指针指向任务队列</li>
-<li>全局变量标志任务队列是不是已经被杀死</li>
-<li>全局变量表示未完成的任务数量</li>
-</ol>
-<p>这个任务队列需要对外开放的接口包括</p>
-<ul>
-<li>创建队列</li>
-<li>销毁队列</li>
-<li>加入任务</li>
-<li>waitAll函数, 等待所有任务执行完成</li>
-<li>waitSome函数, 等待部分任务完成</li>
-</ul>
-<p>由于要线程安全, 所以我们采取以下措施</p>
-<ol>
-<li>全局互斥锁globalMutex, 用来保护全局变量</li>
-<li>任意任务完成就会触发的条件变量和一个对应的互斥锁</li>
-</ol>
-<p>由于我们支持任务指定线程数量, 按理说这也不是很困难, 毕竟我们线程池中只是存储着牧羊人线程, 真正执行的时候才会创建相应数量的羊线程. 但是感谢前人的经验, 我了解到OpenMP线程有一个特性. <strong>同一个牧羊人线程创建的OpenMP线程在不同的并行区域中对cpu的亲和性是一样的.</strong>所以我们可以使用羊线程的数量来索引相应的牧羊人线程.</p>
-<ol>
-<li>变量num_shep_by_threadcount表示threadcount个羊线程下有多少个牧羊人线程可用</li>
-<li>变量waiting_shep_by_threadcount表示threadcount个羊线程下有多少个牧羊人线程等待</li>
-<li>变量num_tasks_by_threadcount表示threadcount个羊线程下的任务数量</li>
-<li>条件变量newTaskCond_by_threadcount, 需要thread_count个线程的新任务入队会触发</li>
-<li>互斥锁newTaskMutex_by_threadcount, 保护需要threadcount个线程的任务入队时需要修改的变量</li>
-</ol>
-<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>任务队列的创建部分代码<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#taskq.c</span></div><div class="line"><span class="function">error_code <span class="title">taskq_create</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">int</span> t,s;</div><div class="line"></div><div class="line">    pthread_mutex_init(&amp;globalMutex,<span class="literal">NULL</span>);</div><div class="line">    pthread_mutex_lock(&amp;globalMutex);</div><div class="line"></div><div class="line">    nthreadcount = npu+<span class="number">1</span>;</div><div class="line"></div><div class="line">    pthread_mutex_init(&amp;(taskq-&gt;mutex),<span class="literal">NULL</span>);</div><div class="line"></div><div class="line">    pthread_mutex_lock(&amp;(taskq-&gt;mutex));</div><div class="line"></div><div class="line">    pthread_cond_init(&amp;anyTaskFinishedCond,<span class="literal">NULL</span>);</div><div class="line">    pthread_mutex_init(&amp;anyTaskFinishedMutex,<span class="literal">NULL</span>);</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (t=<span class="number">0</span>; t&lt;nthreadcount; t++) &#123;</div><div class="line">        pthread_mutex_init(&amp;newTaskMutex_by_threadcount[t],<span class="literal">NULL</span>);</div><div class="line">        num_shep_by_threadcount[t] = <span class="number">1</span>;</div><div class="line">        waiting_shep_by_threadcount[t] = <span class="number">0</span>;</div><div class="line">        num_tasks_by_threadcount[t] = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (s=<span class="number">0</span>; s&lt;num_shep_by_threadcount[t]; s++) &#123;</div><div class="line">            pthread_cond_init(&amp;newTaskCond_by_threadcount[t][s],<span class="literal">NULL</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">void</span> *(*threadFunc)(<span class="keyword">void</span> *);</div><div class="line">    taskq_startroutine(&amp;threadFunc);</div><div class="line">    thpool_create(nthreadcount,threadFunc);</div><div class="line">    pthread_mutex_unlock(&amp;(taskq-&gt;mutex));</div><div class="line">    pthread_mutex_unlock(&amp;globalMutex);</div><div class="line">    <span class="keyword">return</span> SUCCESS;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>其中的threadFunc即为牧羊人线程需要执行的主函数, 部分实现如下<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#taskq.c</span></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> * <span class="title">thread_main</span><span class="params">(<span class="keyword">void</span> *arg)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    Task *myTask = <span class="literal">NULL</span>;</div><div class="line"></div><div class="line">    <span class="keyword">pthread_key_t</span> key;</div><div class="line">    thpool_key(&amp;key);</div><div class="line">    <span class="keyword">int</span> nthreads = (<span class="keyword">int</span>)(<span class="keyword">intptr_t</span>)arg;</div><div class="line"></div><div class="line">    pthread_mutex_lock(&amp;newTaskMutex_by_threadcount[nthreads]);</div><div class="line">    <span class="keyword">int</span> shepidx = num_shep_by_threadcount[nthreads]<span class="number">-1</span>;</div><div class="line">    pthread_mutex_unlock(&amp;newTaskMutex_by_threadcount[nthreads]);</div><div class="line"></div><div class="line">    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE,<span class="literal">NULL</span>);</div><div class="line">    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,<span class="literal">NULL</span>);</div><div class="line"></div><div class="line">    pool *thpool = <span class="literal">NULL</span>;</div><div class="line">    thpool_get(&amp;thpool);</div><div class="line">    sem_post(thpool-&gt;sem);    <span class="comment">//唤醒线程池中的一个线程</span></div><div class="line"></div><div class="line">    <span class="keyword">while</span> (<span class="number">1</span>)</div><div class="line">    &#123;</div><div class="line">        pthread_mutex_lock(&amp;newTaskMutex_by_threadcount[nthreads]);</div><div class="line">        waiting_shep_by_threadcount[nthreads]++;</div><div class="line">        <span class="keyword">while</span>(num_tasks_by_threadcount[nthreads] == <span class="number">0</span>) &#123;  <span class="comment">//无合适的任务</span></div><div class="line">            pthread_cond_wait(&amp;(newTaskCond_by_threadcount[nthreads][shepidx]),&amp;newTaskMutex_by_threadcount[nthreads]);</div><div class="line">        &#125;</div><div class="line">        num_tasks_by_threadcount[nthreads]--;</div><div class="line">        pthread_mutex_unlock(&amp;newTaskMutex_by_threadcount[nthreads]);</div><div class="line"></div><div class="line">        pthread_mutex_lock(&amp;globalMutex);</div><div class="line">        <span class="keyword">if</span> (killed) &#123;</div><div class="line">            pthread_mutex_unlock(&amp;globalMutex);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">        pthread_mutex_unlock(&amp;globalMutex);</div><div class="line"></div><div class="line">        pthread_mutex_lock(&amp;taskq-&gt;mutex);</div><div class="line">        myTask = taskq_findDeleteAndPinTask(taskq,nthreads);</div><div class="line">        pthread_mutex_unlock(&amp;taskq-&gt;mutex);</div><div class="line"></div><div class="line">        pthread_mutex_lock(&amp;newTaskMutex_by_threadcount[nthreads]);</div><div class="line">        waiting_shep_by_threadcount[nthreads]--;</div><div class="line">        pthread_mutex_unlock(&amp;newTaskMutex_by_threadcount[nthreads]);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (!myTask) &#123;</div><div class="line">            pthread_mutex_lock(&amp;newTaskMutex_by_threadcount[nthreads]);</div><div class="line">            num_tasks_by_threadcount[nthreads]++;</div><div class="line">            pthread_mutex_unlock(&amp;newTaskMutex_by_threadcount[nthreads]);</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        pthread_mutex_lock(&amp;newTaskMutex_by_threadcount[nthreads]);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (waiting_shep_by_threadcount[nthreads] == <span class="number">0</span>) &#123;</div><div class="line">            num_shep_by_threadcount[nthreads]++;</div><div class="line">            newTaskCond_by_threadcount[nthreads] = <span class="built_in">realloc</span>(newTaskCond_by_threadcount[nthreads],<span class="keyword">sizeof</span>(<span class="keyword">pthread_cond_t</span>)*num_shep_by_threadcount[nthreads]);</div><div class="line">            pthread_cond_init(&amp;(newTaskCond_by_threadcount[nthreads][num_shep_by_threadcount[nthreads]<span class="number">-1</span>]),<span class="literal">NULL</span>);</div><div class="line">            <span class="keyword">void</span> *(*threadFunc)(<span class="keyword">void</span> *);</div><div class="line">            taskq_startroutine(&amp;threadFunc);</div><div class="line">            pthread_mutex_unlock(&amp;newTaskMutex_by_threadcount[nthreads]);</div><div class="line">            pthread_mutex_lock(&amp;globalMutex);</div><div class="line">            thpoolhread_add(threadFunc,nthreads);</div><div class="line">            pthread_mutex_unlock(&amp;globalMutex);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            pthread_mutex_unlock(&amp;newTaskMutex_by_threadcount[nthreads]);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        pthread_mutex_lock(myTask-&gt;stateMutex);</div><div class="line">        myTask-&gt;state = TASK_RUNNING;</div><div class="line">        pthread_mutex_unlock(myTask-&gt;stateMutex);</div><div class="line"></div><div class="line">        pthread_setspecific(key,myTask);  <span class="comment">//将任务描述信息装入线程私有空间</span></div><div class="line">        myTask-&gt;ret = myTask-&gt;func(myTask-&gt;arg);</div><div class="line">        pthread_setspecific(key,<span class="literal">NULL</span>);</div><div class="line"></div><div class="line">        pthread_mutex_lock(&amp;anyTaskFinishedMutex);</div><div class="line">        num_pending_tasks--;</div><div class="line">        pthread_mutex_unlock(&amp;anyTaskFinishedMutex);</div><div class="line">        pthread_cond_broadcast(&amp;anyTaskFinishedCond);</div><div class="line"></div><div class="line">        pthread_mutex_lock(myTask-&gt;mutex);</div><div class="line">        task_unpin(myTask);    <span class="comment">//归还计算核心</span></div><div class="line">        pthread_mutex_unlock(myTask-&gt;mutex);</div><div class="line"></div><div class="line">        pthread_mutex_lock(myTask-&gt;stateMutex);</div><div class="line">        myTask-&gt;state = TASK_FINISHED;</div><div class="line">        pthread_cond_broadcast(myTask-&gt;finishedCond);</div><div class="line">        pthread_mutex_unlock(myTask-&gt;stateMutex);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>其中的函数taskq_findDeleteAndPinTask主要功能是选择合适的任务并返回. 这里合适的任务是指硬件资源能够满足任务的要求, 该任务才会被选择. 由于其中调用大量体系结构相关函数, 与任务队列的实现不太相关, 这里不多做介绍.<br>waitAll函数实现相比比较简单.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#taskq.c</span></div><div class="line"><span class="function">error_code <span class="title">taskq_waitall</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">if</span> (!taskq) &#123;</div><div class="line">        <span class="keyword">return</span> SUCCESS;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">int</span> canremain = <span class="number">0</span>;</div><div class="line"></div><div class="line">    Task *cur;</div><div class="line">    Task_cur(&amp;cur);  <span class="comment">//获取正在执行的任务</span></div><div class="line">    <span class="keyword">if</span> (cur) &#123;</div><div class="line">        WARNING_LOG(<span class="string">"This function has been called inside a task! Allow one task (this one) to remain active in order to avoid deadlocks."</span>);</div><div class="line">        canremain = <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    pthread_mutex_lock(&amp;anyTaskFinishedMutex);</div><div class="line">    <span class="keyword">while</span>(num_pending_tasks &gt; canremain) &#123;</div><div class="line">        pthread_cond_wait(&amp;anyTaskFinishedCond,&amp;anyTaskFinishedMutex);</div><div class="line">    &#125;</div><div class="line">    pthread_mutex_unlock(&amp;anyTaskFinishedMutex);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> SUCCESS;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>还有waitSome的实现<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#taskq.c</span></div><div class="line"><span class="function">error_code <span class="title">taskq_waitsome</span><span class="params">(Task ** tasks, <span class="keyword">int</span> nt, <span class="keyword">int</span> *index)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">int</span> t;</div><div class="line">    <span class="keyword">int</span> ret = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (t=<span class="number">0</span>; t&lt;nt; t++)</div><div class="line">    &#123;</div><div class="line">        pthread_mutex_lock(tasks[t]-&gt;stateMutex);</div><div class="line">        <span class="keyword">if</span> (tasks[t]-&gt;state == TASK_FINISHED)</div><div class="line">        &#123;</div><div class="line">            ret = <span class="number">1</span>;</div><div class="line">            index[t] = <span class="number">1</span>;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            index[t] = <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        pthread_mutex_unlock(tasks[t]-&gt;stateMutex);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (ret) &#123;</div><div class="line">        <span class="keyword">return</span> SUCCESS;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    pthread_mutex_lock(&amp;anyTaskFinishedMutex);</div><div class="line">    pthread_cond_wait(&amp;anyTaskFinishedCond,&amp;anyTaskFinishedMutex);</div><div class="line">    pthread_mutex_unlock(&amp;anyTaskFinishedMutex);</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (t=<span class="number">0</span>; t&lt;nt; t++)</div><div class="line">    &#123;</div><div class="line">        pthread_mutex_lock(tasks[t]-&gt;stateMutex);</div><div class="line">        <span class="keyword">if</span> (tasks[t]-&gt;state == TASK_FINISHED)</div><div class="line">        &#123;</div><div class="line">            index[t] = <span class="number">1</span>;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            index[t] = <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        pthread_mutex_unlock(tasks[t]-&gt;stateMutex);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> SUCCESS;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>到现在为止, 一个比较简单的任务队列就已经实现了. 它的优点当然就是满足了我们的需求. 但是缺点也有很多, 部分如下</p>
-<ul>
-<li>只支持简单的优先级策略, 即只能将任务放入队首或者队尾</li>
-<li>不支持设置最大任务数量</li>
-<li>无法应对任务数量激增的场景</li>
-</ul>
-
+        google-site-verification: googleadc68421fe0c05cb.html
       
 
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>多谢观看<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="http://7xvbwb.com1.z0.glb.clouddn.com/zhifubao.jpg">
-                      <span class="reward-type">支付宝</span>
-                    </div>
-                    
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="http://7xvbwb.com1.z0.glb.clouddn.com/weixin.jpg">
-                      <span class="reward-type">微信</span>
-                    </div>
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
       
     </div>
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">高性能计算</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">C/C++</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
@@ -353,7 +241,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://genial.wang/2017/06/30/hpc-2/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://genial.wang/googleadc68421fe0c05cb.html" alt="微信分享二维码">
     </div>
 </div>
 
@@ -365,16 +253,6 @@ var _hmt = _hmt || [];
 </article>
 
   
-<nav id="article-nav">
-  
-  
-    <a href="/2017/06/24/hpc-1/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">如何优雅地实现一个任务并行组件(一)</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -439,7 +317,7 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

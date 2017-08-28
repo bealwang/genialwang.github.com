@@ -42,7 +42,7 @@
     <link href="http://genial.wang/2017/06/24/hpc-1/"/>
     <id>http://genial.wang/2017/06/24/hpc-1/</id>
     <published>2017-06-24T10:33:09.000Z</published>
-    <updated>2017-08-28T10:53:59.000Z</updated>
+    <updated>2017-08-28T12:11:41.000Z</updated>
     
     <summary type="html">
     
@@ -73,9 +73,9 @@
     </summary>
     
     
-      <category term="python" scheme="http://genial.wang/tags/python/"/>
-    
       <category term="折腾" scheme="http://genial.wang/tags/%E6%8A%98%E8%85%BE/"/>
+    
+      <category term="python" scheme="http://genial.wang/tags/python/"/>
     
   </entry>
   
@@ -95,9 +95,9 @@
     
       <category term="Linux" scheme="http://genial.wang/tags/Linux/"/>
     
-      <category term="折腾" scheme="http://genial.wang/tags/%E6%8A%98%E8%85%BE/"/>
-    
       <category term="并行计算" scheme="http://genial.wang/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/"/>
+    
+      <category term="折腾" scheme="http://genial.wang/tags/%E6%8A%98%E8%85%BE/"/>
     
   </entry>
   
@@ -106,7 +106,7 @@
     <link href="http://genial.wang/2014/10/01/mass-2/"/>
     <id>http://genial.wang/2014/10/01/mass-2/</id>
     <published>2014-10-01T11:19:40.000Z</published>
-    <updated>2017-08-28T12:11:01.000Z</updated>
+    <updated>2017-08-28T12:11:39.000Z</updated>
     
     <summary type="html">
     
