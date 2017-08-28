@@ -3,7 +3,6 @@
 
 
     
-    
   <url>
     <loc>http://genial.wang/2017/06/24/hpc-1/</loc>
     <lastmod>2017-08-28T12:11:41.000Z</lastmod>
@@ -71,9 +70,9 @@
         <title>基于Python的静态博客系统</title>
         <pubTime>2015-11-02T16:13:43.000Z</pubTime>
         
-        <tag>折腾</tag>
-         
         <tag>python</tag>
+         
+        <tag>折腾</tag>
          
          
            
@@ -92,9 +91,9 @@
         
         <tag>Linux</tag>
          
-        <tag>并行计算</tag>
-         
         <tag>折腾</tag>
+         
+        <tag>并行计算</tag>
          
          
            
