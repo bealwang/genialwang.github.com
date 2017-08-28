@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://genial.wang">
-  <title>Tag: python | genialwang</title>
+  <title>如何优雅地实现一个任务并行组件(一) | genialwang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="genialwang 的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="genialwang">
-<meta property="og:url" content="http://genial.wang/tags/python/index.html">
+  <meta name="description" content="什么? 你连并发编程都不会就敢说自己熟悉C/C++?觉得互斥锁, 条件变量, 信号量这些东西很头疼? 觉得自己还不了解LINUX C/C++下的并发编程? 来实现一个线程池吧.">
+<meta name="keywords" content="高性能计算,C&#x2F;C++,Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何优雅地实现一个任务并行组件(一)">
+<meta property="og:url" content="http://genial.wang/2017/06/24/hpc-1/index.html">
 <meta property="og:site_name" content="genialwang">
-<meta property="og:description" content="genialwang 的博客">
+<meta property="og:description" content="什么? 你连并发编程都不会就敢说自己熟悉C/C++?觉得互斥锁, 条件变量, 信号量这些东西很头疼? 觉得自己还不了解LINUX C/C++下的并发编程? 来实现一个线程池吧.">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-08-28T10:53:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="genialwang">
-<meta name="twitter:description" content="genialwang 的博客">
+<meta name="twitter:title" content="如何优雅地实现一个任务并行组件(一)">
+<meta name="twitter:description" content="什么? 你连并发编程都不会就敢说自己熟悉C/C++?觉得互斥锁, 条件变量, 信号量这些东西很头疼? 觉得自己还不了解LINUX C/C++下的并发编程? 来实现一个线程池吧.">
   
     <link rel="alternative" href="/atom.xml" title="genialwang" type="application/atom+xml">
   
@@ -177,64 +179,241 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-hpc-1" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/11/03/mass-1/" class="archive-article-date">
-  	<time datetime="2015-11-02T16:13:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-03</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/11/03/mass-1/">基于Python的静态博客系统</a>
+    <h1 class="article-title" itemprop="name">
+      如何优雅地实现一个任务并行组件(一)
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/06/24/hpc-1/" class="archive-article-date">
+  	<time datetime="2017-06-24T10:33:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>什么? 你连并发编程都不会就敢说自己熟悉C/C++?<br>觉得互斥锁, 条件变量, 信号量这些东西很头疼? 觉得自己还不了解LINUX C/C++下的并发编程? 来实现一个线程池吧.<br><a id="more"></a></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>众所周知, 在系统结构上挖掘并行性一般在于三个方面. 进程级并行, 线程级并行以及指令级并行. 而从另一个维度上区分, 并行计算又可以分为数据并行和任务级(Task)并行.<br>最近的项目既要用到数据并行也要用到任务并行, 所以我们要弄到一个任务并行组件以满足我们的需求. 我们的要求很严格甚至苛刻.</p>
+<ul>
+<li>要轻量级</li>
+<li>要线程级的Task并行</li>
+<li>要支持OpenMP</li>
+<li>线程要可以绑定到计算核心(PU)上执行</li>
+<li>可以指定任务需要的线程个数</li>
+<li>要支持任务嵌套和任务依赖</li>
+<li>子任务要可以使用父任务的硬件资源</li>
+</ul>
+<p>总的来说就是Task具体的内容是使用者自己写的, 使用者可以在代码里面随意用OpenMP, 但是真正执行的时候这些线程是绑定到各个PU上的, 这样做的好处是可以减少资源冲突, 也可以方面硬件性能计数器的良好工作. 总之好处是很多的.<br>但是, 不能你让我做我闷头就做, 要注重调研, 看看现有的东西能不能满足我们的需要…调研好了, 不管Intel家的Threading Building Blocks(TBB)还是Cilk Plus都在自己的用户手册上明确指出慎用OpenMP, 因为可能导致核过载从而产生性能问题. 何况我们的要求是轻量级的, 功能也只有这么多, 因此我们准备自己实现一个Task并行组件.<br>本篇内容主要描述怎么实现一个线程池, 这也是任务并行组件的基础.</p>
+<h2 id="什么是线程池"><a href="#什么是线程池" class="headerlink" title="什么是线程池"></a>什么是线程池</h2><p>我认为线程池不需要太多解释, 因为所有的含义都在名字上了:). 线程池也是一种池化技术, 而我认为<strong>大多数池化技术的核心都是在权衡管理开销与创建/销毁开销.</strong> 线程池也不外如是, 若线程太多, 则管理开销增大, 得不偿失; 线程太少, 则失去了线程池的意义. 一般我们将线程池的初始线程数量设置的与本机核心数量相当最为合适. </p>
+<h2 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h2><p>首先, 我们要有一个对象存线程池, 这个对象中应该包含线程数量, 每个线程的描述符, 以及一个信号量. 所以我们设计其数据结构如下.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#thpool.c</span></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">pool</span> &#123;</span></div><div class="line">    <span class="keyword">pthread_t</span> *threads;</div><div class="line">    <span class="keyword">int</span> nThreads;</div><div class="line">    <span class="keyword">sem_t</span> *sem;</div><div class="line">&#125;pool;</div></pre></td></tr></table></figure></p>
+<p>为什么要有一个信号量呢? 其实很简单, 在没有可执行的任务的时候, 线程池中的线程处于等待状态. 当有任务的时候, 例如一个任务入队, 则增加信号量, 信号量大于0的时候操作系统会唤醒一个处于等待状态的线程. 这样很科学, 线程池也要遵守基本法.<br>然后我们分析一下这个线程池需要提供什么功能.</p>
+<ul>
+<li>必须要有创建线程池的入口</li>
+<li>还要有销毁线程池的入口</li>
+<li>还要有增加线程的接口</li>
+<li>那么每个线程要知道自己在执行什么任务</li>
+<li>要有一个函数返回自己</li>
+</ul>
+<p>为什么要返回自己呢? 因为我们只使用C语言, 在这里我们的一个文件可以看做是一个类, 而且是一个单例类. 这些线程池相关的函数就是类的成员函数.</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>首先, 我们用一个全局静态变量保存线程池指针, 为什么用全局静态变量呢? 因为静态变量有一个很重要的特性就是只本文件可见, 这也是为什么线程池要有一个函数用于返回自己.<br>全局静态变量编译时保证不会污染项目, 毕竟一个大型项目鬼知道自己之前在另外一个文件中定义过什么全局变量:). 个人认为命名空间和变量作用域简直就是天才的想法好吗.<br>首先看线程池的创建<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#thpool.c</span></div><div class="line"><span class="keyword">static</span> pool *thpool = <span class="literal">NULL</span>;</div><div class="line">error_code thpool_create(int nThreads, void *(func)(void *))</div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> t;</div><div class="line">    <span class="keyword">int</span> oldthreads = <span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span> (!thpool) &#123;</div><div class="line">        thpool = (pool*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(pool)));</div><div class="line">        thpool-&gt;nThreads = nThreads;</div><div class="line">        thpool-&gt;threads = (<span class="keyword">pthread_t</span>*)<span class="built_in">malloc</span>(thpool-&gt;nThreads*<span class="keyword">sizeof</span>(<span class="keyword">pthread_t</span>)));</div><div class="line">        thpool-&gt;sem = (<span class="keyword">sem_t</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">sem_t</span>));</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        oldthreads = thpool-&gt;nThreads;</div><div class="line">        thpool-&gt;nThreads = nThreads;</div><div class="line">        sem_init(thpool-&gt;sem, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">        thpool-&gt;threads = <span class="built_in">realloc</span>(thpool-&gt;threads,thpool-&gt;nThreads*<span class="keyword">sizeof</span>(<span class="keyword">pthread_t</span>));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    sem_init(thpool-&gt;sem, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">    <span class="keyword">for</span> (t=oldthreads; t&lt;thpool-&gt;nThreads; t++)&#123;</div><div class="line">        pthread_create(&amp;(thpool-&gt;threads[t]), <span class="literal">NULL</span>, func, (<span class="keyword">void</span> *)(<span class="keyword">intptr_t</span>)t);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (t=oldthreads; t&lt;thpool-&gt;nThreads; t++)&#123;</div><div class="line">        sem_wait(thpool-&gt;sem);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> SUCCESS;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>再看线程池的销毁<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function">error_code <span class="title">thpool_destroy</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">if</span> (thpool == <span class="literal">NULL</span>) <span class="keyword">return</span> SUCCESS;</div><div class="line"></div><div class="line">    <span class="keyword">int</span> t;</div><div class="line">    <span class="keyword">for</span> (t=<span class="number">0</span>; t&lt;thpool-&gt;nThreads; t++)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span> (pthread_join(thpool-&gt;threads[t],<span class="literal">NULL</span>))&#123;</div><div class="line">            ERROR_LOG(<span class="string">"pthread_join failed: %s"</span>,strerror(errno));</div><div class="line">            <span class="keyword">return</span> ERR_UNKNOWN;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="built_in">free</span>(thpool-&gt;threads); thpool-&gt;threads = <span class="literal">NULL</span>;</div><div class="line">    <span class="built_in">free</span>(thpool-&gt;sem); thpool-&gt;sem = <span class="literal">NULL</span>;</div><div class="line">    <span class="built_in">free</span>(thpool); thpool = <span class="literal">NULL</span>;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> SUCCESS;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>接着是线程池中扩容<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">error_code thpool_add(void *(func)(void *), intptr_t arg)</div><div class="line">&#123;</div><div class="line">    thpool-&gt;nThreads++;</div><div class="line">    thpool-&gt;threads = <span class="built_in">realloc</span>(thpool-&gt;threads,thpool-&gt;nThreads*<span class="keyword">sizeof</span>(<span class="keyword">pthread_t</span>));</div><div class="line">    pthread_create(&amp;(thpool-&gt;threads[thpool-&gt;nThreads<span class="number">-1</span>]), <span class="literal">NULL</span>, func, (<span class="keyword">void</span> *)arg);</div><div class="line">    sem_wait(thpool-&gt;sem);</div><div class="line">    <span class="keyword">return</span> SUCCESS;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>只提供了增加一个线程的接口, 当然也可以增加多个, 稍微修改即可.<br>线程池还需要开放给外部接口, 用来获得自己, 由于接口较为简单, 不做赘述.</p>
+<h2 id="让线程知道自己在做什么"><a href="#让线程知道自己在做什么" class="headerlink" title="让线程知道自己在做什么"></a>让线程知道自己在做什么</h2><p>世上最悲剧的事情就是, 自己不知道自己在干什么.<br>线程也会遇到同样的问题, 那么线程怎么知道自己在执行的是什么任务呢? 这是一个问题. 那么假如有一个线程, 它所执行的是一个嵌套任务, 即有子任务. 那么它做完自己的任务之后应该要等到它的孩子都死了(完成了)它才能安心死去. 但是假如它自己都不知道自己在做什么任务, 那怎么知道自己有没有孩子呢?<br>我们在想, 如果让每一个线程都有自己的一个房间, 房间中放着线程的私人物品, 当然也可以放它当前执行的任务的描述信息. 这样当总控程序一声令下: 活着的人, 告诉我你们都在干什么? 每个线程都去自己的房间中拿出相应的任务描述给总控程序, 这样就解决了.<br><strong>pthread_key</strong> 可以胜任这项工作. 怎么解释它的功能呢? 就是每个线程有自己的私有空间, 我们可以执行相同的函数, 但是操作的是每个线程的私有数据. 具体用法如下.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">pthread_key_t</span> key = <span class="number">0</span>;</div><div class="line">pthread_key_create(&amp;key,<span class="literal">NULL</span>);</div><div class="line">pthread_setspecific(key,Taskdata);</div><div class="line">data = (type*)pthread_getspecific(key);</div></pre></td></tr></table></figure></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>到此为止, 一个简单的线程池就实现完毕了. 它暂时满足了我们的需求. 当然了, 它有很多缺点, 部分列举如下</p>
+<ul>
+<li>不支持设置核心线程数量，即最少的线程数量，以及最大线程数量</li>
+<li>不支持自动减少线程，如当任务较少的时候线程会自动减少到核心线程数量</li>
+<li>无法应对高并发或者线程激增场景</li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>多谢观看<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://7xvbwb.com1.z0.glb.clouddn.com/zhifubao.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://7xvbwb.com1.z0.glb.clouddn.com/weixin.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">高性能计算</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">折腾</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">C/C++</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://genial.wang/2017/06/24/hpc-1/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/06/30/hpc-2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          如何优雅地实现一个任务并行组件(二)
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2015/11/03/mass-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">基于Python的静态博客系统</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+    <section id="comments">
+      <div id="disqus_thread"></div>
+        <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'genial-1'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </section>
+  
 
 
           </div>
@@ -257,9 +436,9 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,

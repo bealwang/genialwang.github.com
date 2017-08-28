@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://genial.wang/"/>
-  <updated>2017-08-28T06:36:00.000Z</updated>
+  <updated>2017-08-28T11:06:10.000Z</updated>
   <id>http://genial.wang/</id>
   
   <author>
@@ -16,15 +16,59 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>如何优雅地实现一个任务并行组件(二)</title>
+    <link href="http://genial.wang/2017/06/30/hpc-2/"/>
+    <id>http://genial.wang/2017/06/30/hpc-2/</id>
+    <published>2017-06-30T04:56:17.000Z</published>
+    <updated>2017-08-28T11:06:10.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;上一篇博客中我们实现了一个精简的线程池, 虽然不如Java线程池这么强大, 但是足以满足我们的需求. 我们有了线程池, 还需要一个数据结构来存放任务, 这样每个线程就知道该去哪里找任务做. 所以我们需要一个任务队列.&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="高性能计算" scheme="http://genial.wang/tags/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/"/>
+    
+      <category term="C/C++" scheme="http://genial.wang/tags/C-C/"/>
+    
+      <category term="Linux" scheme="http://genial.wang/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>如何优雅地实现一个任务并行组件(一)</title>
+    <link href="http://genial.wang/2017/06/24/hpc-1/"/>
+    <id>http://genial.wang/2017/06/24/hpc-1/</id>
+    <published>2017-06-24T10:33:09.000Z</published>
+    <updated>2017-08-28T10:53:59.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;什么? 你连并发编程都不会就敢说自己熟悉C/C++?&lt;br&gt;觉得互斥锁, 条件变量, 信号量这些东西很头疼? 觉得自己还不了解LINUX C/C++下的并发编程? 来实现一个线程池吧.&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="高性能计算" scheme="http://genial.wang/tags/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/"/>
+    
+      <category term="C/C++" scheme="http://genial.wang/tags/C-C/"/>
+    
+      <category term="Linux" scheme="http://genial.wang/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
     <title>基于Python的静态博客系统</title>
     <link href="http://genial.wang/2015/11/03/mass-1/"/>
     <id>http://genial.wang/2015/11/03/mass-1/</id>
     <published>2015-11-02T16:13:43.000Z</published>
-    <updated>2017-08-28T06:36:00.000Z</updated>
+    <updated>2017-08-28T08:46:04.000Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;如果你觉得WP实在是过于臃肿;如果你觉得Hexo仍然存在很多冗余的东西;如果你想自主开发一个简单但却不平凡的博客系统,那么你可以参考本文的做法。(下文将本文实现的博客系统称为pyblog)&lt;br&gt;
+      &lt;p&gt;如果你觉得WP实在是过于臃肿; 如果你觉得Hexo仍然存在很多冗余的东西; 如果你想自主开发一个简单但却不平凡的博客系统, 那么你可以参考本文的做法. (下文将本文实现的博客系统称为pyblog)&lt;br&gt;
     
     </summary>
     
@@ -37,8 +81,8 @@
   
   <entry>
     <title>Linux 机群系统 DIY</title>
-    <link href="http://genial.wang/2015/03/17/mass-2/"/>
-    <id>http://genial.wang/2015/03/17/mass-2/</id>
+    <link href="http://genial.wang/2015/03/17/pc-1/"/>
+    <id>http://genial.wang/2015/03/17/pc-1/</id>
     <published>2015-03-17T06:35:24.000Z</published>
     <updated>2017-08-28T08:00:25.000Z</updated>
     
@@ -49,11 +93,29 @@
     </summary>
     
     
-      <category term="折腾" scheme="http://genial.wang/tags/%E6%8A%98%E8%85%BE/"/>
-    
       <category term="Linux" scheme="http://genial.wang/tags/Linux/"/>
     
+      <category term="折腾" scheme="http://genial.wang/tags/%E6%8A%98%E8%85%BE/"/>
+    
       <category term="并行计算" scheme="http://genial.wang/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>记录保研</title>
+    <link href="http://genial.wang/2014/10/01/mass-2/"/>
+    <id>http://genial.wang/2014/10/01/mass-2/</id>
+    <published>2014-10-01T11:19:40.000Z</published>
+    <updated>2017-08-28T12:11:01.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;我很庆幸人生中的几个重大的抉择都是自己拿的主意, 包括高考报专业, 大一下学期转专业, 和决定读研. 记录一下我的保研路, 没有太大的坎坷, 但足够难忘.&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="随笔" scheme="http://genial.wang/tags/%E9%9A%8F%E7%AC%94/"/>
     
   </entry>
   

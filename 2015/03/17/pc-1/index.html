@@ -6,18 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://genial.wang">
-  <title>Tag: python | genialwang</title>
+  <title>Linux 机群系统 DIY | genialwang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="genialwang 的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="genialwang">
-<meta property="og:url" content="http://genial.wang/tags/python/index.html">
+  <meta name="description" content="没有云平台? 没有昂贵, 完备的并行自动化部署工具? 只有计算机硬件设备? 但是还是任性的想优雅的使用并行环境?下面就让我们一起愉快的经历 DIY 并行环境的历程吧…">
+<meta name="keywords" content="Linux,折腾,并行计算">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 机群系统 DIY">
+<meta property="og:url" content="http://genial.wang/2015/03/17/pc-1/index.html">
 <meta property="og:site_name" content="genialwang">
-<meta property="og:description" content="genialwang 的博客">
+<meta property="og:description" content="没有云平台? 没有昂贵, 完备的并行自动化部署工具? 只有计算机硬件设备? 但是还是任性的想优雅的使用并行环境?下面就让我们一起愉快的经历 DIY 并行环境的历程吧…">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://7xvbwb.com1.z0.glb.clouddn.com/1.jpg">
+<meta property="og:image" content="http://7xvbwb.com1.z0.glb.clouddn.com/2.jpg">
+<meta property="og:image" content="http://7xvbwb.com1.z0.glb.clouddn.com/3.jpg">
+<meta property="og:image" content="http://7xvbwb.com1.z0.glb.clouddn.com/4.jpg">
+<meta property="og:image" content="http://7xvbwb.com1.z0.glb.clouddn.com/5.png">
+<meta property="og:image" content="http://7xvbwb.com1.z0.glb.clouddn.com/6.png">
+<meta property="og:image" content="http://7xvbwb.com1.z0.glb.clouddn.com/7.png">
+<meta property="og:image" content="http://7xvbwb.com1.z0.glb.clouddn.com/8.jpg">
+<meta property="og:image" content="http://7xvbwb.com1.z0.glb.clouddn.com/9.jpg">
+<meta property="og:updated_time" content="2017-08-28T08:00:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="genialwang">
-<meta name="twitter:description" content="genialwang 的博客">
+<meta name="twitter:title" content="Linux 机群系统 DIY">
+<meta name="twitter:description" content="没有云平台? 没有昂贵, 完备的并行自动化部署工具? 只有计算机硬件设备? 但是还是任性的想优雅的使用并行环境?下面就让我们一起愉快的经历 DIY 并行环境的历程吧…">
+<meta name="twitter:image" content="http://7xvbwb.com1.z0.glb.clouddn.com/1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="genialwang" type="application/atom+xml">
   
@@ -177,64 +189,265 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-pc-1" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/11/03/mass-1/" class="archive-article-date">
-  	<time datetime="2015-11-02T16:13:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-03</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/11/03/mass-1/">基于Python的静态博客系统</a>
+    <h1 class="article-title" itemprop="name">
+      Linux 机群系统 DIY
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2015/03/17/pc-1/" class="archive-article-date">
+  	<time datetime="2015-03-17T06:35:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-03-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>没有云平台? 没有昂贵, 完备的并行自动化部署工具? 只有计算机硬件设备? 但是还是任性的想优雅的使用并行环境?<br>下面就让我们一起愉快的经历 DIY 并行环境的历程吧…<br><a id="more"></a></p>
+<h2 id="操作系统的安装"><a href="#操作系统的安装" class="headerlink" title="操作系统的安装"></a>操作系统的安装</h2><p>这里主要有几款常见的linux操作系统:</p>
+<ul>
+<li>Redhat Linux</li>
+<li>SuSE Linux</li>
+<li>Debian GNU/Linux</li>
+</ul>
+<p>前两个版本具有可管理性强和用户界面友好等优点, 后一个具有可裁剪性强的优点, 按照需求任意选择一款即可.</p>
+<h2 id="操作系统配置"><a href="#操作系统配置" class="headerlink" title="操作系统配置"></a>操作系统配置</h2><h3 id="主机名配置"><a href="#主机名配置" class="headerlink" title="主机名配置"></a>主机名配置</h3><p>通过修改<strong>/etc/sysconfig/network</strong>文件中的<strong>HOSTNAME</strong>字段, 可以修改主机名, 但是需要重新启动系统生效. 假设使用的主机名和ip分别是:<br>  vm-1-1         10.0.0.11   (主节点)<br>  vm-1-2         10.0.0.12<br>  vm-1-3         10.0.0.13<br>  vm-1-4         10.0.0.14</p>
+<h3 id="网络配置"><a href="#网络配置" class="headerlink" title="网络配置"></a>网络配置</h3><p>1  修改<strong>/etc/hosts</strong>文件中的主机列表, 将所有的计算节点名以及ip信息写入, 形式如下:<br>    10.0.0.11    vm-1-1<br>    10.0.0.12    vm-1-2<br>    10.0.0.13    vm-1-3<br>    10.0.0.14    vm-1-4</p>
+<p>2  配置防火墙<br>    可以使用如下命令查看当前防火墙设置:<br>    <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">iptables -L</div></pre></td></tr></table></figure></p>
+<pre><code>配置防火墙, 使得远程用户可通过ssh正常访问, 命令如下:
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">iptables -A INPUT -p tcp -dport 22 -j A:</div></pre></td></tr></table></figure>
+</code></pre><p>3  用ping命令检查节点间的互通状态:<br>    <img src="http://7xvbwb.com1.z0.glb.clouddn.com/1.jpg" alt="检查节点互通"><br>    确保节点之间两两互通, 对于不能互通的节点对, 可以按照如下命令格式添加路由:<br>    route add 网段地址 Mask 子网掩码 网关地址<br>    <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">route add 172.21.0.0 Mask 255.255.0.0 172.21.0.1</div></pre></td></tr></table></figure></p>
+<h3 id="新增用户"><a href="#新增用户" class="headerlink" title="新增用户"></a>新增用户</h3><p>可以使用命令adduser命令增加并行计算用户, 格式如下:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">adduser mpiuser</div></pre></td></tr></table></figure></p>
+<h3 id="配置SSH服务"><a href="#配置SSH服务" class="headerlink" title="配置SSH服务"></a>配置SSH服务</h3><p>我们选用linux平台广泛使用的OpenSSH, 它由服务器软件包openssh-server和客户端程序openssh-clientis组成, 默认情况下, 两者已经安装在你的系统中了.<br>1 查看方式:<br>   <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rpm -q openssh-server</div><div class="line">rpm -q openssh-clients</div></pre></td></tr></table></figure></p>
+<p>2 启动和查询SSH服务<br>   一般linux默认开机启动SSH服务, 所以大家可以直接使用可使用<strong>ntsysv</strong>命令, 将SSH服务设置为开机自启动服务. 也可以使用如下命令启动/重启/停止/查询SSH服务<br>   <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service sshd start/restart/stop/status</div></pre></td></tr></table></figure></p>
+<p>3 配置节点之间无密码ssh互通<br>   相应的示例命令如下:<br>   <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -C "youremail@sina.com"</div><div class="line">cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys</div><div class="line">ssh-copy-id mpiuser@vm-1-1</div></pre></td></tr></table></figure></p>
+<p>   <strong>注意这个操作在所有节点上的mpiuser用户下均需执行, 直到计算节点–&gt;主节点以及主节点–&gt;计算节点均可互通</strong><br>到此为止, 组成并行计算环境的所有计算节点上均具有相同的主机列表, 节点间均可互通.</p>
+<h2 id="MPICH的安装与配置"><a href="#MPICH的安装与配置" class="headerlink" title="MPICH的安装与配置"></a>MPICH的安装与配置</h2><h3 id="MPI的安装"><a href="#MPI的安装" class="headerlink" title="MPI的安装"></a>MPI的安装</h3><p>1 下载MPICH软件安装包mpich2    <strong>1.2.1p1.tar.gz</strong><br>   以mpiuser用户解压软件包, 创建安装路径, 配置安装路径, 编译, 安装.命令如下:<br>   <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">tar zxvf mpich2-1.2.1p1.tar.gz</div><div class="line">cd mpich2-1.2.1p1</div><div class="line">mkdir /home/mpiuser/mpi2-1.2.1p1_install</div><div class="line">./configure -prefix=/home/mpiuser/mpi2-1.2.1p1_install</div><div class="line">make &amp;&amp; make install</div></pre></td></tr></table></figure></p>
+<p>2 设置环境变量<br>   在<strong>/home/mpiuser/.bashrc</strong>文件中添加如下语句:<br>   <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export PATH=/home/mpiuser/mpi2-1.2.1p1_install/bin:$PATH</div></pre></td></tr></table></figure></p>
+<p>   运行<strong>source</strong>命令使我们的修改生效.</p>
+<p>3 检查安装是否成功<br>   <img src="http://7xvbwb.com1.z0.glb.clouddn.com/2.jpg" alt="查看安装是否成功"></p>
+<h3 id="MPI的配置"><a href="#MPI的配置" class="headerlink" title="MPI的配置"></a>MPI的配置</h3><p>1 配置mdp.conf文件<br>   在mpiuser的主目录下创建文件.mdp.conf<br>   编辑.mdp.conf文件, 添加语句:<strong>secretword=111111</strong><br>   修改.mdp.conf文件的访问权限:<br>   <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod 644 .mdp.conf</div></pre></td></tr></table></figure></p>
+<p>2 启动mdp守护进程<br>   在mpiuser的主目录下, 创建mpd.hosts文件, 将计算节点名称列表填入, 例如vm-1-2~vm-1-4.<br>   启动各节点上的mdp<br>   <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mdpboot -n 启动个数 -f ~/mdp.hosts</div></pre></td></tr></table></figure></p>
+<p>   检查是否启动正常:<br>   <img src="http://7xvbwb.com1.z0.glb.clouddn.com/3.jpg" alt="检查mdp启动情况"><br>   mdp的关闭命令是<strong>mdpallexit</strong> </p>
+<h3 id="MPI的使用"><a href="#MPI的使用" class="headerlink" title="MPI的使用"></a>MPI的使用</h3><p>我们只关心并行环境的搭建, 对于MPI的使用, 咱们就一带而过啦.<br><img src="http://7xvbwb.com1.z0.glb.clouddn.com/4.jpg" alt="MPI的使用"></p>
+<h2 id="NFS"><a href="#NFS" class="headerlink" title="NFS"></a>NFS</h2><p>网络文件系统NFS(Network File System)是 UNIX\Linux 系统支持的一种网络文件服务.<br>通过NFS, 网络中的计算机可以发布共享信息, 远程客户端能够像使用本地文件一样访问该共享资源.<br><img src="http://7xvbwb.com1.z0.glb.clouddn.com/5.png" alt="NFS"><br>它有如下优点:</p>
+<ul>
+<li>节约磁盘空间</li>
+<li>节约硬件设备</li>
+<li>共享用户和应用程序目录</li>
+</ul>
+<h2 id="NFS的安装"><a href="#NFS的安装" class="headerlink" title="NFS的安装"></a>NFS的安装</h2><p>相关rpm软件包:<br>nfs-utils-*.rpm:NFS服务主程序包<br>Portmap-*.rpm:记录服务的端口映射信息<br>安装命令:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rpm -ivh nfs-utils-*.rpm</div></pre></td></tr></table></figure></p>
+<h2 id="NFS服务端的配置"><a href="#NFS服务端的配置" class="headerlink" title="NFS服务端的配置"></a>NFS服务端的配置</h2><p>1  配置<strong>/etc/exports</strong>文件:</p>
+<ul>
+<li>用于定义需要共享的目录，以及访问对象的控制</li>
+<li>默认情况下，该文件内容为空，即不共享任何目录</li>
+<li>当需要共享目录时，需要管理员手动设置<br>发布共享目录的格式:<br>共享目录    [客户端1(参数1, 参数2, …)] [客户端2(参数1, 参数2, …)]…<br>共享目录:指NFS服务器上需要给客户端共享出来的目录, 在设置目录时需要使用绝对路径<br>客户端  :是指所有可以访问共享目录的计算机<br><img src="http://7xvbwb.com1.z0.glb.clouddn.com/6.png" alt="客户端"><br>参数    :是指客户端对共享目录的访问权限设置<br><img src="http://7xvbwb.com1.z0.glb.clouddn.com/7.png" alt="参数"><br>示例:<br><img src="http://7xvbwb.com1.z0.glb.clouddn.com/8.jpg" alt="示例"><br>在NFS服务器上，共享如下目录:<ul>
+<li>/media目录, 允许所有客户端访问，但只具有只读权限</li>
+<li>/NFS/public目录, 允许192.168.1.0/24和196.168.2.0/24网段的客户端访问, 且只具有只读权限</li>
+<li>/NFS/team1目录, 允许来自.team1.apple域的客户端访问, 具有读写权限</li>
+<li>/NFS/works目录, 允许192.168.1.0/24网段客户端访问, 并将root用户映射为匿名用户</li>
+<li>/NFS/test目录, 所有客户端允许访问, 所有用户映射为匿名用户, 并指定匿名用户的UID和GID均为65534</li>
+<li>/NFS/security目录, 仅允许192.168.1.254客户端访问, 具有读写权限</li>
+</ul>
+</li>
+</ul>
+<p>2   配置NFS固定端口<br>    针对场景:NFS服务每次启动, 其对应的端口号都会随机变化, 这对服务器防火墙配置带来负担. 因此, 可以通过配置, 固定NFS服务所用端口.<br>    配置文件<strong>/etc/sysconfig/nfs</strong>增加如下配置行:<br>    MOUNT_PORT=”5001”<br>    STATD_PORT=”5002”<br>    LOCKD_UDPPORT=”5003”<br>    LOCKD_TCPPORT=”5003”<br>    RQUOTAD_PORT=”5004”</p>
+<h2 id="NFS服务端测试"><a href="#NFS服务端测试" class="headerlink" title="NFS服务端测试"></a>NFS服务端测试</h2><p>NFS服务启动/停止/重启/查询状态命令:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">service portmap start/stop/restart/status</div><div class="line">service nfs start/stop/restart/status</div></pre></td></tr></table></figure></p>
+<p>开机自动启动NFS服务命令:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chkconfig nfs on</div></pre></td></tr></table></figure></p>
+<p>停止开机自动启动NFS:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chkconfig nfs off</div></pre></td></tr></table></figure></p>
+<h2 id="NFS客户端配置"><a href="#NFS客户端配置" class="headerlink" title="NFS客户端配置"></a>NFS客户端配置</h2><p>1 查看NFS服务器的共享目录:<br>   <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">showmount -e 服务器名/IP</div></pre></td></tr></table></figure></p>
+<p>2 挂载NFS文件系统:<br>   <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mount -t nfs NFS服务器IP地址/主机名：共享目录  本地挂载点</div></pre></td></tr></table></figure></p>
+<p>   例：将192.168.1.254上的/tmp目录挂载到本地的/test目录<br>   <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mount -t nfs 192.168.1.254:/tmp /test</div></pre></td></tr></table></figure></p>
+<p>3 卸载NFS文件系统:<br>   <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">umount 本地挂载点</div></pre></td></tr></table></figure></p>
+<p>4 开机自动挂载NFS<br>   配置客户端<strong>/etc/fstab</strong>文件<br>   挂载目录格式:<br>   NFS服务器IP:共享目录  本地挂载点  nfs defaults 0 0<br>   <img src="http://7xvbwb.com1.z0.glb.clouddn.com/9.jpg" alt="自动挂载NFS"></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>可能有人会这么问:如果我需要配置一个大型机群系统, 这样每个节点都需要配置, 那我岂不是需要一台一<br>台计算机去操作?<br>是啊，我们怎么能忍受这么蠢的事情发生呢? 有个系统可以帮助我们, 那就是大名鼎鼎的 <strong>Network Information Service</strong>, 小名叫NIS. 但如果不想出事的话, 你最好只是在内网使用, 因为它的安全性不是很好.</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>多谢观看<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://7xvbwb.com1.z0.glb.clouddn.com/zhifubao.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://7xvbwb.com1.z0.glb.clouddn.com/weixin.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">折腾</a>
         		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并行计算</a>
+        		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://genial.wang/2015/03/17/pc-1/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2015/11/03/mass-1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          基于Python的静态博客系统
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2014/10/01/mass-2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">记录保研</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+    <section id="comments">
+      <div id="disqus_thread"></div>
+        <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'genial-1'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </section>
+  
 
 
           </div>
@@ -257,9 +470,9 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,

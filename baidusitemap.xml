@@ -4,18 +4,56 @@
 
     
   <url>
-    <loc>http://genial.wang/2015/03/17/mass-2/</loc>
-    <lastmod>2017-08-28T08:00:25.000Z</lastmod>
+    <loc>http://genial.wang/2014/10/01/mass-2/</loc>
+    <lastmod>2017-08-28T12:11:01.000Z</lastmod>
     <data>
         <display>
-        <title>Linux 机群系统 DIY</title>
-        <pubTime>2015-03-17T06:35:24.000Z</pubTime>
+        <title>记录保研</title>
+        <pubTime>2014-10-01T11:19:40.000Z</pubTime>
         
-        <tag>折腾</tag>
+        <tag>随笔</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://genial.wang/2017/06/30/hpc-2/</loc>
+    <lastmod>2017-08-28T11:06:10.000Z</lastmod>
+    <data>
+        <display>
+        <title>如何优雅地实现一个任务并行组件(二)</title>
+        <pubTime>2017-06-30T04:56:17.000Z</pubTime>
+        
+        <tag>高性能计算</tag>
+         
+        <tag>C/C++</tag>
          
         <tag>Linux</tag>
          
-        <tag>并行计算</tag>
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://genial.wang/2017/06/24/hpc-1/</loc>
+    <lastmod>2017-08-28T10:53:59.000Z</lastmod>
+    <data>
+        <display>
+        <title>如何优雅地实现一个任务并行组件(一)</title>
+        <pubTime>2017-06-24T10:33:09.000Z</pubTime>
+        
+        <tag>高性能计算</tag>
+         
+        <tag>C/C++</tag>
+         
+        <tag>Linux</tag>
          
          
            
@@ -26,7 +64,7 @@
     
   <url>
     <loc>http://genial.wang/2015/11/03/mass-1/</loc>
-    <lastmod>2017-08-28T06:36:00.000Z</lastmod>
+    <lastmod>2017-08-28T08:46:04.000Z</lastmod>
     <data>
         <display>
         <title>基于Python的静态博客系统</title>
@@ -35,6 +73,27 @@
         <tag>python</tag>
          
         <tag>折腾</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://genial.wang/2015/03/17/pc-1/</loc>
+    <lastmod>2017-08-28T08:00:25.000Z</lastmod>
+    <data>
+        <display>
+        <title>Linux 机群系统 DIY</title>
+        <pubTime>2015-03-17T06:35:24.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+        <tag>折腾</tag>
+         
+        <tag>并行计算</tag>
          
          
            
