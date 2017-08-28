@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>genialwang</title>
+  <subtitle>点滴生活，点滴感悟</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://genial.wang/"/>
+  <updated>2017-08-28T02:08:34.000Z</updated>
+  <id>http://genial.wang/</id>
+  
+  <author>
+    <name>王彪</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>基于Python的静态博客系统</title>
+    <link href="http://genial.wang/2017/08/28/mass-1/"/>
+    <id>http://genial.wang/2017/08/28/mass-1/</id>
+    <published>2017-08-27T16:13:43.000Z</published>
+    <updated>2017-08-28T02:08:34.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;当前流行的博客系统有很多,博主简单介绍两款:&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+      <category term="python" scheme="http://genial.wang/tags/python/"/>
+    
+      <category term="折腾" scheme="http://genial.wang/tags/%E6%8A%98%E8%85%BE/"/>
+    
+  </entry>
+  
+</feed>
