@@ -4,8 +4,29 @@
 
     
   <url>
+    <loc>http://genial.wang/2015/03/17/mass-2/</loc>
+    <lastmod>2017-08-28T08:00:25.000Z</lastmod>
+    <data>
+        <display>
+        <title>Linux 机群系统 DIY</title>
+        <pubTime>2015-03-17T06:35:24.000Z</pubTime>
+        
+        <tag>折腾</tag>
+         
+        <tag>Linux</tag>
+         
+        <tag>并行计算</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://genial.wang/2015/11/03/mass-1/</loc>
-    <lastmod>2017-08-28T06:14:10.000Z</lastmod>
+    <lastmod>2017-08-28T06:36:00.000Z</lastmod>
     <data>
         <display>
         <title>基于Python的静态博客系统</title>
