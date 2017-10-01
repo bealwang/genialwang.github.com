@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://genial.wang/"/>
-  <updated>2017-08-28T11:06:10.000Z</updated>
+  <updated>2017-10-01T02:31:57.000Z</updated>
   <id>http://genial.wang/</id>
   
   <author>
@@ -20,11 +20,11 @@
     <link href="http://genial.wang/2017/06/30/hpc-2/"/>
     <id>http://genial.wang/2017/06/30/hpc-2/</id>
     <published>2017-06-30T04:56:17.000Z</published>
-    <updated>2017-08-28T11:06:10.000Z</updated>
+    <updated>2017-10-01T02:31:57.000Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;上一篇博客中我们实现了一个精简的线程池, 虽然不如Java线程池这么强大, 但是足以满足我们的需求. 我们有了线程池, 还需要一个数据结构来存放任务, 这样每个线程就知道该去哪里找任务做. 所以我们需要一个任务队列.&lt;br&gt;
+      &lt;p&gt;上一篇博客我们实现了一个精简的线程池, 虽然不如Java线程池这么强大, 但是足以满足我们的需求.&lt;br&gt;我们有了线程池, 还需要一个数据结构来存放任务, 这样每个线程就知道该去哪里找任务做. 所以我们需要一个任务队列.&lt;br&gt;本篇内容主要描述怎么实现一个任务队列, 这也是任务并行组件的核心所在.&lt;br&gt;
     
     </summary>
     
@@ -42,11 +42,11 @@
     <link href="http://genial.wang/2017/06/24/hpc-1/"/>
     <id>http://genial.wang/2017/06/24/hpc-1/</id>
     <published>2017-06-24T10:33:09.000Z</published>
-    <updated>2017-08-28T12:11:41.000Z</updated>
+    <updated>2017-10-01T01:57:07.000Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;什么? 你连并发编程都不会就敢说自己熟悉C/C++?&lt;br&gt;觉得互斥锁, 条件变量, 信号量这些东西很头疼? 觉得自己还不了解LINUX C/C++下的并发编程? 来实现一个线程池吧.&lt;br&gt;
+      &lt;p&gt;众所周知, 在系统结构上挖掘并行性一般在于三个方面. 进程级并行, 线程级并行以及指令级并行. 而从另一个维度上区分, 并行计算又可以分为数据并行和任务级(Task)并行.&lt;br&gt;本篇内容主要描述怎么实现一个线程池, 这也是任务并行组件的基础.&lt;br&gt;
     
     </summary>
     
@@ -73,9 +73,9 @@
     </summary>
     
     
-      <category term="python" scheme="http://genial.wang/tags/python/"/>
-    
       <category term="折腾" scheme="http://genial.wang/tags/%E6%8A%98%E8%85%BE/"/>
+    
+      <category term="python" scheme="http://genial.wang/tags/python/"/>
     
   </entry>
   
@@ -84,20 +84,20 @@
     <link href="http://genial.wang/2015/03/17/pc-1/"/>
     <id>http://genial.wang/2015/03/17/pc-1/</id>
     <published>2015-03-17T06:35:24.000Z</published>
-    <updated>2017-08-28T08:00:25.000Z</updated>
+    <updated>2017-10-01T01:54:46.000Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;没有云平台? 没有昂贵, 完备的并行自动化部署工具? 只有计算机硬件设备? 但是还是任性的想优雅的使用并行环境?&lt;br&gt;下面就让我们一起愉快的经历 DIY 并行环境的历程吧…&lt;br&gt;
+      &lt;p&gt;没有云平台? 没有昂贵, 完备的并行自动化部署工具? 只有计算机硬件设备? 但是还是任性的想优雅的使用并行环境?&lt;br&gt;
     
     </summary>
     
     
       <category term="Linux" scheme="http://genial.wang/tags/Linux/"/>
     
-      <category term="折腾" scheme="http://genial.wang/tags/%E6%8A%98%E8%85%BE/"/>
-    
       <category term="并行计算" scheme="http://genial.wang/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/"/>
+    
+      <category term="折腾" scheme="http://genial.wang/tags/%E6%8A%98%E8%85%BE/"/>
     
   </entry>
   
