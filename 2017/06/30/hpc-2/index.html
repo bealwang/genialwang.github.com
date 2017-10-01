@@ -16,10 +16,12 @@
 <meta property="og:site_name" content="genialwang">
 <meta property="og:description" content="上一篇博客我们实现了一个精简的线程池, 虽然不如Java线程池这么强大, 但是足以满足我们的需求.我们有了线程池, 还需要一个数据结构来存放任务, 这样每个线程就知道该去哪里找任务做. 所以我们需要一个任务队列.本篇内容主要描述怎么实现一个任务队列, 这也是任务并行组件的核心所在.">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-10-01T02:31:57.000Z">
+<meta property="og:image" content="http://ox5c01cy3.bkt.clouddn.com/task.png?imageView2/1/w/451/h/812/q/75|imageslim">
+<meta property="og:updated_time" content="2017-10-01T14:03:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何优雅地实现一个任务并行组件(二)">
 <meta name="twitter:description" content="上一篇博客我们实现了一个精简的线程池, 虽然不如Java线程池这么强大, 但是足以满足我们的需求.我们有了线程池, 还需要一个数据结构来存放任务, 这样每个线程就知道该去哪里找任务做. 所以我们需要一个任务队列.本篇内容主要描述怎么实现一个任务队列, 这也是任务并行组件的核心所在.">
+<meta name="twitter:image" content="http://ox5c01cy3.bkt.clouddn.com/task.png?imageView2/1/w/451/h/812/q/75|imageslim">
   
     <link rel="alternative" href="/atom.xml" title="genialwang" type="application/atom+xml">
   
@@ -210,6 +212,7 @@ var _hmt = _hmt || [];
 <li>执行任务.</li>
 <li>若没有合适的任务, 则继续等待.</li>
 </ol>
+<p><img src="http://ox5c01cy3.bkt.clouddn.com/task.png?imageView2/1/w/451/h/812/q/75|imageslim" alt="任务并行示意图"></p>
 <p>首先, 我们要有一个数据结构将任务存下来, 任务队列需要能够支持增加, 删除, 设置优先级等功能. 根据这种场景我们认为用双向链表存放最为合适.<br>做东西写代码之前, 我们先来梳理一下任务队列应该长成什么样子.<br>这个任务队列需要对外开放的接口包括:</p>
 <ul>
 <li>创建队列</li>
@@ -497,11 +500,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>
