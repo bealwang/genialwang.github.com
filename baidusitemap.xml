@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://genial.wang/2017/06/30/hpc-2/</loc>
-    <lastmod>2017-10-01T14:03:42.000Z</lastmod>
+    <lastmod>2017-10-02T01:51:17.000Z</lastmod>
     <data>
         <display>
         <title>如何优雅地实现一个任务并行组件(二)</title>
@@ -55,9 +55,9 @@
         
         <tag>Linux</tag>
          
-        <tag>并行计算</tag>
-         
         <tag>折腾</tag>
+         
+        <tag>并行计算</tag>
          
          
            
@@ -91,9 +91,9 @@
         <title>基于Python的静态博客系统</title>
         <pubTime>2015-11-02T16:13:43.000Z</pubTime>
         
-        <tag>折腾</tag>
-         
         <tag>python</tag>
+         
+        <tag>折腾</tag>
          
          
            
