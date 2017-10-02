@@ -4,6 +4,27 @@
 
     
   <url>
+    <loc>http://genial.wang/2017/06/30/hpc-2/</loc>
+    <lastmod>2017-10-02T16:06:04.000Z</lastmod>
+    <data>
+        <display>
+        <title>如何优雅地实现一个任务并行组件(二)</title>
+        <pubTime>2017-06-30T04:56:17.000Z</pubTime>
+        
+        <tag>高性能计算</tag>
+         
+        <tag>C/C++</tag>
+         
+        <tag>Linux</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://genial.wang/2017/07/02/hpc-3/</loc>
     <lastmod>2017-10-02T16:05:59.000Z</lastmod>
     <data>
@@ -31,27 +52,6 @@
         <display>
         <title>如何优雅地实现一个任务并行组件(一)</title>
         <pubTime>2017-06-24T10:33:09.000Z</pubTime>
-        
-        <tag>高性能计算</tag>
-         
-        <tag>C/C++</tag>
-         
-        <tag>Linux</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://genial.wang/2017/06/30/hpc-2/</loc>
-    <lastmod>2017-10-02T06:36:18.000Z</lastmod>
-    <data>
-        <display>
-        <title>如何优雅地实现一个任务并行组件(二)</title>
-        <pubTime>2017-06-30T04:56:17.000Z</pubTime>
         
         <tag>高性能计算</tag>
          
