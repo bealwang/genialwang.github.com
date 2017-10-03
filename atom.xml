@@ -95,9 +95,9 @@
     </summary>
     
     
-      <category term="python" scheme="http://genial.wang/tags/python/"/>
-    
       <category term="折腾" scheme="http://genial.wang/tags/%E6%8A%98%E8%85%BE/"/>
+    
+      <category term="python" scheme="http://genial.wang/tags/python/"/>
     
   </entry>
   
@@ -117,9 +117,9 @@
     
       <category term="Linux" scheme="http://genial.wang/tags/Linux/"/>
     
-      <category term="折腾" scheme="http://genial.wang/tags/%E6%8A%98%E8%85%BE/"/>
-    
       <category term="并行计算" scheme="http://genial.wang/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/"/>
+    
+      <category term="折腾" scheme="http://genial.wang/tags/%E6%8A%98%E8%85%BE/"/>
     
   </entry>
   
