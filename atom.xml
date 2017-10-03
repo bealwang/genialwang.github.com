@@ -4,9 +4,9 @@
   <subtitle>点滴生活，点滴感悟</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://genial.wang/"/>
+  <link href="http://blog.genial.wang/"/>
   <updated>2017-10-02T16:05:59.000Z</updated>
-  <id>http://genial.wang/</id>
+  <id>http://blog.genial.wang/</id>
   
   <author>
     <name>王彪</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>如何优雅地实现一个任务并行组件(三)</title>
-    <link href="http://genial.wang/2017/07/02/hpc-3/"/>
-    <id>http://genial.wang/2017/07/02/hpc-3/</id>
+    <link href="http://blog.genial.wang/2017/07/02/hpc-3/"/>
+    <id>http://blog.genial.wang/2017/07/02/hpc-3/</id>
     <published>2017-07-02T14:54:25.000Z</published>
     <updated>2017-10-02T16:05:59.000Z</updated>
     
@@ -29,18 +29,18 @@
     </summary>
     
     
-      <category term="高性能计算" scheme="http://genial.wang/tags/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/"/>
+      <category term="高性能计算" scheme="http://blog.genial.wang/tags/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/"/>
     
-      <category term="C/C++" scheme="http://genial.wang/tags/C-C/"/>
+      <category term="C/C++" scheme="http://blog.genial.wang/tags/C-C/"/>
     
-      <category term="Linux" scheme="http://genial.wang/tags/Linux/"/>
+      <category term="Linux" scheme="http://blog.genial.wang/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>如何优雅地实现一个任务并行组件(二)</title>
-    <link href="http://genial.wang/2017/06/30/hpc-2/"/>
-    <id>http://genial.wang/2017/06/30/hpc-2/</id>
+    <link href="http://blog.genial.wang/2017/06/30/hpc-2/"/>
+    <id>http://blog.genial.wang/2017/06/30/hpc-2/</id>
     <published>2017-06-30T04:56:17.000Z</published>
     <updated>2017-10-02T16:06:04.000Z</updated>
     
@@ -51,18 +51,18 @@
     </summary>
     
     
-      <category term="高性能计算" scheme="http://genial.wang/tags/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/"/>
+      <category term="高性能计算" scheme="http://blog.genial.wang/tags/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/"/>
     
-      <category term="C/C++" scheme="http://genial.wang/tags/C-C/"/>
+      <category term="C/C++" scheme="http://blog.genial.wang/tags/C-C/"/>
     
-      <category term="Linux" scheme="http://genial.wang/tags/Linux/"/>
+      <category term="Linux" scheme="http://blog.genial.wang/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>如何优雅地实现一个任务并行组件(一)</title>
-    <link href="http://genial.wang/2017/06/24/hpc-1/"/>
-    <id>http://genial.wang/2017/06/24/hpc-1/</id>
+    <link href="http://blog.genial.wang/2017/06/24/hpc-1/"/>
+    <id>http://blog.genial.wang/2017/06/24/hpc-1/</id>
     <published>2017-06-24T10:33:09.000Z</published>
     <updated>2017-10-02T15:34:03.000Z</updated>
     
@@ -73,18 +73,18 @@
     </summary>
     
     
-      <category term="高性能计算" scheme="http://genial.wang/tags/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/"/>
+      <category term="高性能计算" scheme="http://blog.genial.wang/tags/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/"/>
     
-      <category term="C/C++" scheme="http://genial.wang/tags/C-C/"/>
+      <category term="C/C++" scheme="http://blog.genial.wang/tags/C-C/"/>
     
-      <category term="Linux" scheme="http://genial.wang/tags/Linux/"/>
+      <category term="Linux" scheme="http://blog.genial.wang/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>基于Python的静态博客系统</title>
-    <link href="http://genial.wang/2015/11/03/mass-1/"/>
-    <id>http://genial.wang/2015/11/03/mass-1/</id>
+    <link href="http://blog.genial.wang/2015/11/03/mass-1/"/>
+    <id>http://blog.genial.wang/2015/11/03/mass-1/</id>
     <published>2015-11-02T16:13:43.000Z</published>
     <updated>2017-08-28T08:46:04.000Z</updated>
     
@@ -95,16 +95,16 @@
     </summary>
     
     
-      <category term="python" scheme="http://genial.wang/tags/python/"/>
+      <category term="折腾" scheme="http://blog.genial.wang/tags/%E6%8A%98%E8%85%BE/"/>
     
-      <category term="折腾" scheme="http://genial.wang/tags/%E6%8A%98%E8%85%BE/"/>
+      <category term="python" scheme="http://blog.genial.wang/tags/python/"/>
     
   </entry>
   
   <entry>
     <title>Linux 机群系统 DIY</title>
-    <link href="http://genial.wang/2015/03/17/pc-1/"/>
-    <id>http://genial.wang/2015/03/17/pc-1/</id>
+    <link href="http://blog.genial.wang/2015/03/17/pc-1/"/>
+    <id>http://blog.genial.wang/2015/03/17/pc-1/</id>
     <published>2015-03-17T06:35:24.000Z</published>
     <updated>2017-10-01T01:54:46.000Z</updated>
     
@@ -115,18 +115,18 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://genial.wang/tags/Linux/"/>
+      <category term="Linux" scheme="http://blog.genial.wang/tags/Linux/"/>
     
-      <category term="折腾" scheme="http://genial.wang/tags/%E6%8A%98%E8%85%BE/"/>
+      <category term="并行计算" scheme="http://blog.genial.wang/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/"/>
     
-      <category term="并行计算" scheme="http://genial.wang/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/"/>
+      <category term="折腾" scheme="http://blog.genial.wang/tags/%E6%8A%98%E8%85%BE/"/>
     
   </entry>
   
   <entry>
     <title>记录保研</title>
-    <link href="http://genial.wang/2014/10/01/mass-2/"/>
-    <id>http://genial.wang/2014/10/01/mass-2/</id>
+    <link href="http://blog.genial.wang/2014/10/01/mass-2/"/>
+    <id>http://blog.genial.wang/2014/10/01/mass-2/</id>
     <published>2014-10-01T11:19:40.000Z</published>
     <updated>2017-08-28T12:11:39.000Z</updated>
     
@@ -137,7 +137,7 @@
     </summary>
     
     
-      <category term="随笔" scheme="http://genial.wang/tags/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://blog.genial.wang/tags/%E9%9A%8F%E7%AC%94/"/>
     
   </entry>
   

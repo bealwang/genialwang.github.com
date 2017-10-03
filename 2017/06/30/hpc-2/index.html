@@ -5,14 +5,14 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://genial.wang">
+  <link rel="dns-prefetch" href="http://blog.genial.wang">
   <title>如何优雅地实现一个任务并行组件(二) | genialwang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="上一篇博客我们实现了一个精简的线程池, 虽然不如Java线程池这么强大, 但是足以满足我们的需求.我们有了线程池, 还需要一个数据结构来存放任务, 这样每个线程就知道该去哪里找任务做. 所以我们需要一个任务队列.本篇内容主要描述怎么实现一个任务队列, 这也是任务并行组件的核心所在.">
 <meta name="keywords" content="高性能计算,C&#x2F;C++,Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何优雅地实现一个任务并行组件(二)">
-<meta property="og:url" content="http://genial.wang/2017/06/30/hpc-2/index.html">
+<meta property="og:url" content="http://blog.genial.wang/2017/06/30/hpc-2/index.html">
 <meta property="og:site_name" content="genialwang">
 <meta property="og:description" content="上一篇博客我们实现了一个精简的线程池, 虽然不如Java线程池这么强大, 但是足以满足我们的需求.我们有了线程池, 还需要一个数据结构来存放任务, 这样每个线程就知道该去哪里找任务做. 所以我们需要一个任务队列.本篇内容主要描述怎么实现一个任务队列, 这也是任务并行组件的核心所在.">
 <meta property="og:locale" content="zh-CN">
@@ -354,7 +354,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://genial.wang/2017/06/30/hpc-2/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://blog.genial.wang/2017/06/30/hpc-2/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -515,11 +515,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color5">并行计算</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -527,7 +523,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">并行计算</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
             
             <div class="clearfix"></div>
